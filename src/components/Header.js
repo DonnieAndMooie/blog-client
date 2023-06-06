@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header>
       <img src={PC} alt="" />
-      <h1>DonnieDebugsLife</h1>
+      <h1><a href="/" className="title">DonnieDebugsLife</a></h1>
     </header>
   );
 };

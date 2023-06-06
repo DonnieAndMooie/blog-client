@@ -15,6 +15,7 @@ const RouteSwitch = () => {
         return err;
       }
     }
+
     fetchBlogs();
   }, []);
 
