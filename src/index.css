@@ -130,6 +130,14 @@ button{
     transition: all ease-in 0.2s;
 }
 
+.form-item{
+    margin-bottom: 12px;
+}
+
+label{
+    margin-right: 8px;
+}
+
 button:hover{
     background-color: greenyellow;
 }

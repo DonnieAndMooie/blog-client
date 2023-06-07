@@ -16,6 +16,9 @@
         "react/no-array-index-key": "off",
         "react/prop-types": "off",
         "consistent-return": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "react/no-unescaped-entities": "off",
+        "react-jsx/one-expression-per-line": "off"
     }
 }

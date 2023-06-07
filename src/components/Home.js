@@ -4,6 +4,23 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const Home = ({ blogs }) => {
+  async function login(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const response = await fetch("https://young-water-1545.fly.dev/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+    console.log(username);
+    console.log(password);
+    console.log(response.json().[[PromiseResult]].token);
+  }
+
   return (
     <div>
       <Header />
@@ -23,6 +40,23 @@ const Home = ({ blogs }) => {
             );
           })}
         </div>
+        <form className="login" onSubmit={(e) => login(e)}>
+          <h3>Log In</h3>
+          <div className="form-item">
+            <label htmlFor="username">Username:</label>
+            <input type="text" name="username" id="username" />
+          </div>
+          <div className="form-item">
+            <label htmlFor="password">Password: </label>
+            <input type="password" name="password" id="password" />
+          </div>
+          <button type="submit">Log In</button>
+        </form>
+        <p>
+          Don't have an account?
+          {" "}
+          <a href="/sign-up">Sign Up</a>
+        </p>
       </div>
       <Footer />
     </div>
