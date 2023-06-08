@@ -188,3 +188,8 @@ form{
     font-size: 18px;
     padding: 8px;
 }
+
+.login-div{
+    margin-top: auto;
+    margin-bottom: 20px;
+}

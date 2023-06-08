@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 
 const RouteSwitch = () => {
   const [blogs, setBlogs] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     async function fetchBlogs() {
@@ -23,10 +24,10 @@ const RouteSwitch = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home blogs={blogs} />} />
+        <Route path="/" element={<Home blogs={blogs} setLoggedIn={setLoggedIn} />} />
         {blogs.map((blog, index) => {
           return (
-            <Route key={index} path={blog._id} element={<Blog blog={blog} />} />
+            <Route key={index} path={blog._id} element={<Blog blog={blog} setLoggedIn={setLoggedIn} />} />
           );
         })}
         <Route path="/sign-up" element={<SignUp />} />

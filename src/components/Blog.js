@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import Header from "./Header";
 import Footer from "./Footer";
+import Login from "./Login";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, setLoggedIn }) => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
     async function fetchComments() {
@@ -25,7 +26,8 @@ const Blog = ({ blog }) => {
         <p className="date">{format(new Date(blog.timestamp), "io LLLL u")}</p>
         <p className="blog-content">{blog.content}</p>
         <h3>Comments</h3>
-        <form>
+        <Login blogPage setLoggedIn={setLoggedIn} />
+        <form className={localStorage.getItem("user") ? "" : "hide"}>
           <p>Add a comment...</p>
           <textarea />
           <button type="submit">Send</button>
