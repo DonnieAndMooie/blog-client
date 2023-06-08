@@ -19,6 +19,9 @@
         "no-underscore-dangle": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "react/no-unescaped-entities": "off",
-        "react-jsx/one-expression-per-line": "off"
+        "react-jsx/one-expression-per-line": "off",
+        "import/no-named-as-default": "off",
+        "no-unused-vars": "off",
+        "react/no-this-in-sfc": "off"
     }
 }

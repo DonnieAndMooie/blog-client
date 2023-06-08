@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@600&family=Source+Sans+3&display=swap');
 
 *{
     box-sizing: border-box;
@@ -12,7 +12,7 @@ body{
     text-align: center;
     background: url("./images/background.jpg") no-repeat;
     background-size: cover;
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: "Source Sans 3", sans-serif;
 }
 
 .content{
@@ -47,6 +47,7 @@ header img{
 footer{
     margin-top: 30px;
     font-weight: 600;
+    font-family: "Geologica", sans-serif;
 }
 
 .intro{
@@ -118,6 +119,7 @@ textarea{
     margin-bottom: 10px;
     font-size: 24px;
     font-family: "Source Sans Pro", sans-serif;
+    width: 100%;
 }
 
 button{
@@ -147,4 +149,42 @@ form{
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
+    width: 100%;
+}
+
+.hide{
+    display: none;
+}
+
+.error{
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user{
+    font-size: 20px;
+    margin-top: auto;
+    font-family: "Geologica", sans-serif
+}
+
+.logout{
+    font-size: 16px;
+    padding: 8px;
+}
+
+.sign-up{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 24px;
+    justify-items: left;
+    font-size: 24px;
+    width: 85%;
+    margin-bottom: 22px;
+}
+
+.sign-up input{
+    font-size: 18px;
+    padding: 8px;
 }

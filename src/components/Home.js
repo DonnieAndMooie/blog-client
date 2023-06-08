@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
+import moment from "moment";
 import Header from "./Header";
 import Footer from "./Footer";
 
 const Home = ({ blogs }) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  // Check if token has expired
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const object = JSON.parse(token);
+      const timestamp = moment(object.timestamp);
+      const currentTime = moment(new Date());
+      const difference = currentTime.diff(timestamp, "hours");
+      if (difference >= 24) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
+      setLoggedIn(true);
+    }
+  }, []);
+
   async function login(e) {
     e.preventDefault();
     const username = document.getElementById("username").value;
@@ -16,9 +35,23 @@ const Home = ({ blogs }) => {
         password,
       }),
     });
-    console.log(username);
-    console.log(password);
-    console.log(response.json().[[PromiseResult]].token);
+
+    const data = await response.json();
+
+    if (data.token) {
+      localStorage.setItem("token", JSON.stringify({ token: data.token, timestamp: Date.now() }));
+      localStorage.setItem("user", username);
+      setLoggedIn(true);
+    } else {
+      const error = document.querySelector(".error");
+      error.classList.remove("hide");
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLoggedIn(false);
   }
 
   return (
@@ -40,7 +73,7 @@ const Home = ({ blogs }) => {
             );
           })}
         </div>
-        <form className="login" onSubmit={(e) => login(e)}>
+        <form className={localStorage.getItem("token") ? "hide" : "login"} onSubmit={(e) => login(e)}>
           <h3>Log In</h3>
           <div className="form-item">
             <label htmlFor="username">Username:</label>
@@ -50,13 +83,20 @@ const Home = ({ blogs }) => {
             <label htmlFor="password">Password: </label>
             <input type="password" name="password" id="password" />
           </div>
+          <p className="error hide">Incorrect username or password</p>
           <button type="submit">Log In</button>
         </form>
-        <p>
+        <p className={localStorage.getItem("token") ? "hide" : ""}>
           Don't have an account?
           {" "}
           <a href="/sign-up">Sign Up</a>
         </p>
+        <p className={localStorage.getItem("user") ? "user" : "hide"}>
+          You are currently logged in as
+          {" "}
+          <strong>{localStorage.getItem("user")}</strong>
+        </p>
+        <button className={localStorage.getItem("user") ? "logout" : "hide"} type="button" onClick={logout}>Log Out</button>
       </div>
       <Footer />
     </div>

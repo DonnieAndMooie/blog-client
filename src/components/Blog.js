@@ -17,12 +17,6 @@ const Blog = ({ blog }) => {
     fetchComments();
   }, []);
 
-  // async function postComment(id){
-  //   await fetch(`/https://young-water-1545.fly.dev/blogs/${id}/comments`, {
-  //     method: "POST",
-  //   })
-  // }
-
   return (
     <div>
       <Header />
@@ -33,7 +27,7 @@ const Blog = ({ blog }) => {
         <h3>Comments</h3>
         <form>
           <p>Add a comment...</p>
-          <textarea cols="55" rows="10" />
+          <textarea />
           <button type="submit">Send</button>
         </form>
         {comments.map((comment, index) => {
