@@ -18,6 +18,31 @@ const Blog = ({ blog, setLoggedIn }) => {
     fetchComments();
   }, []);
 
+  async function commentHandler(e) {
+    e.preventDefault();
+    const comment = document.querySelector("textarea").value;
+    const author = JSON.parse(localStorage.getItem("user")).id;
+    const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token")).token}`,
+      },
+      body: JSON.stringify({
+        text: comment,
+        timestamp: Date.now(),
+        author,
+        blog: blog._id,
+      }),
+    });
+    const data = await response.json();
+    const user = await fetch(`https://young-water-1545.fly.dev/users/${author}`);
+    const userData = await user.json();
+    data.author = userData;
+    setComments([...comments, data]);
+    document.querySelector("textarea").value = "";
+  }
+
   return (
     <div>
       <Header />
@@ -27,7 +52,7 @@ const Blog = ({ blog, setLoggedIn }) => {
         <p className="blog-content">{blog.content}</p>
         <h3>Comments</h3>
         <Login blogPage setLoggedIn={setLoggedIn} />
-        <form className={localStorage.getItem("user") ? "" : "hide"}>
+        <form className={localStorage.getItem("user") ? "" : "hide"} onSubmit={(e) => commentHandler(e)}>
           <p>Add a comment...</p>
           <textarea />
           <button type="submit">Send</button>

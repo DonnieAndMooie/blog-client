@@ -17,8 +17,9 @@ export default function Login({ setLoggedIn, blogPage }) {
     const data = await response.json();
 
     if (data.token) {
+      console.log(data);
       localStorage.setItem("token", JSON.stringify({ token: data.token, timestamp: Date.now() }));
-      localStorage.setItem("user", username);
+      localStorage.setItem("user", JSON.stringify({ username, id: data.userId }));
       setLoggedIn(true);
     } else {
       const error = document.querySelector(".error");
@@ -27,6 +28,8 @@ export default function Login({ setLoggedIn, blogPage }) {
   }
 
   function logout() {
+    const error = document.querySelector(".error");
+    error.classList.add("hide");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setLoggedIn(false);
@@ -56,7 +59,7 @@ export default function Login({ setLoggedIn, blogPage }) {
       <p className={localStorage.getItem("user") && !blogPage ? "user" : "hide"}>
         You are currently logged in as
         {" "}
-        <strong>{localStorage.getItem("user")}</strong>
+        <strong>{localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""}</strong>
       </p>
       <button className={localStorage.getItem("user") && !blogPage ? "logout" : "hide"} type="button" onClick={logout}>Log Out</button>
     </div>
