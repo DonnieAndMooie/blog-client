@@ -10,7 +10,8 @@ const Blog = ({ blog, setLoggedIn }) => {
     async function fetchComments() {
       try {
         const result = await (await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments`)).json();
-        setComments(result);
+        const sortedComments = result.reverse();
+        setComments(sortedComments);
       } catch (err) {
         return err;
       }
@@ -35,12 +36,26 @@ const Blog = ({ blog, setLoggedIn }) => {
         blog: blog._id,
       }),
     });
+    document.querySelector("textarea").value = "";
     const data = await response.json();
     const user = await fetch(`https://young-water-1545.fly.dev/users/${author}`);
     const userData = await user.json();
     data.author = userData;
-    setComments([...comments, data]);
-    document.querySelector("textarea").value = "";
+    setComments([data, ...comments]);
+  }
+
+  async function deleteComment(comment, index) {
+    setComments(comments.filter((item) => {
+      return item._id !== comment._id;
+    }));
+    const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments/${comment._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token")).token}`,
+      },
+    });
+    const data = await response.json();
   }
 
   return (
@@ -62,8 +77,13 @@ const Blog = ({ blog, setLoggedIn }) => {
             <div key={index} className="comment">
               <div className="comment-header">
                 <p><strong>{comment.author.username}</strong></p>
-                <p className="date">{format(new Date(comment.timestamp), "p P")}</p>
+                <div className="right-header">
+                  <p className="date">{format(new Date(comment.timestamp), "h:mm a dd/MM/u")}</p>
+                  {comment.author._id === JSON.parse(localStorage.getItem("user")).id
+                  && <button type="button" className="delete" onClick={() => deleteComment(comment, index)}>X</button>}
+                </div>
               </div>
+
               <p>{comment.text}</p>
             </div>
           );

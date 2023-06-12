@@ -109,6 +109,12 @@ a:hover{
     justify-content: space-between;
 }
 
+.right-header{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 h3{
     font-size: 20px;
 }
@@ -193,4 +199,17 @@ form{
 .login-div{
     margin-top: auto;
     margin-bottom: 20px;
+}
+
+.delete{
+    background-color: red;
+    color: white;
+    border-radius: 24px;
+    border: none;
+    height: 48px;
+    font-size: 18px;
+}
+
+.delete:hover{
+    background-color: rgb(254, 101, 101);
 }

@@ -27,7 +27,7 @@ const RouteSwitch = () => {
         <Route path="/" element={<Home blogs={blogs} setLoggedIn={setLoggedIn} />} />
         {blogs.map((blog, index) => {
           return (
-            <Route key={index} path={blog._id} element={<Blog blog={blog} setLoggedIn={setLoggedIn} />} />
+            <Route key={index} path={`/${blog._id}`} element={<Blog blog={blog} setLoggedIn={setLoggedIn} />} />
           );
         })}
         <Route path="/sign-up" element={<SignUp />} />
