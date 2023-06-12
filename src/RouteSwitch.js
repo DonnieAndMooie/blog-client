@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Blog from "./components/Blog";
 import SignUp from "./components/SignUp";
+import CreateBlog from "./components/CreateBlog";
 
 const RouteSwitch = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,13 +25,14 @@ const RouteSwitch = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home blogs={blogs} setLoggedIn={setLoggedIn} />} />
+        <Route path="/" element={<Home blogs={blogs} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />} />
         {blogs.map((blog, index) => {
           return (
             <Route key={index} path={`/${blog._id}`} element={<Blog blog={blog} setLoggedIn={setLoggedIn} />} />
           );
         })}
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/create-blog" element={<CreateBlog />} />
       </Routes>
     </BrowserRouter>
   );

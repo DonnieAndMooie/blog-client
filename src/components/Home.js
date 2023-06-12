@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
 
-const Home = ({ blogs, setLoggedIn }) => {
+const Home = ({ blogs, setLoggedIn, loggedIn }) => {
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   // Check if token has expired
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,6 +24,24 @@ const Home = ({ blogs, setLoggedIn }) => {
       setLoggedIn(true);
     }
   }, []);
+
+  useEffect(() => {
+    async function checkIfAdmin() {
+      if (!localStorage.getItem("user")) {
+        setIsAdmin(false);
+        return;
+      }
+      const userId = JSON.parse(localStorage.getItem("user")).id;
+      const user = await fetch(`https://young-water-1545.fly.dev/users/${userId}`);
+      const userData = await user.json();
+      if (userData.admin) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    }
+    checkIfAdmin();
+  }, [loggedIn]);
 
   return (
     <div>
@@ -41,6 +62,7 @@ const Home = ({ blogs, setLoggedIn }) => {
             );
           })}
         </div>
+        <button type="button" className={isAdmin ? "new-blog-btn" : "hide"} onClick={() => navigate("/create-blog")}>+ New Blog</button>
         <Login setLoggedIn={setLoggedIn} />
       </div>
       <Footer />

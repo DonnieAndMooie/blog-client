@@ -213,3 +213,9 @@ form{
 .delete:hover{
     background-color: rgb(254, 101, 101);
 }
+
+.new-blog-btn{
+    border-radius: 18px;
+    font-weight: bold;
+    margin-top: auto;
+}
