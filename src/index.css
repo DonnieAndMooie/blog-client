@@ -250,7 +250,8 @@ form{
     font-weight: bold;
 }
 
-.unpublished{
+.unpublished,
+.cancel{
     background-color: red;
     color: white;
 }
@@ -261,15 +262,32 @@ form{
     padding: 5px;
 }
 
-.edit-icon{
+.edit-icon,
+.delete-icon{
     height: 22px;
     cursor: pointer;
 }
 
-.edit-icon:hover{
+.edit-icon:hover,
+.delete-icon:hover{
     opacity: 0.6;
 }
 
-.unpublished:hover{
+.unpublished:hover,
+.cancel:hover{
     background-color: rgb(209, 0, 0);
 }
+
+.confirm-delete{
+    background-color: rgb(255, 119, 0);
+    padding: 18px;
+    margin-top: 12px;
+    border-radius: 12px;
+}
+
+.confirm-delete .buttons{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+

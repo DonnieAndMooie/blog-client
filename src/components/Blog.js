@@ -71,7 +71,7 @@ const Blog = ({ blog, setLoggedIn }) => {
       <Header />
       <div className="content">
         <h2>{blog.title}</h2>
-        <p className="date">{format(new Date(blog.timestamp), "io LLLL u")}</p>
+        <p className="date">{format(new Date(blog.timestamp), "do LLLL u")}</p>
         <p className="blog-content" dangerouslySetInnerHTML={{ __html: htmlDecode(blog.content) }} />
         <h3>Comments</h3>
         <Login blogPage setLoggedIn={setLoggedIn} />

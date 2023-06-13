@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import moment from "moment";
+import moment, { duration } from "moment";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
 import Edit from "../images/edit.png";
+import Delete from "../images/delete.png";
 
 const Home = ({
   blogs, setLoggedIn, loggedIn,
@@ -74,6 +75,32 @@ const Home = ({
     }
   }
 
+  async function deleteBlog(blog) {
+    const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token")).token}`,
+      },
+    });
+    window.location.reload(false);
+  }
+
+  function confirmDelete(blog) {
+    const popup = document.querySelector(".confirm-delete");
+    popup.classList.remove("hide");
+
+    const confirm = document.querySelector(".confirm");
+    const cancel = document.querySelector(".cancel");
+    confirm.addEventListener("click", () => {
+      popup.classList.add("hide");
+      deleteBlog(blog);
+    });
+    cancel.addEventListener("click", () => {
+      popup.classList.add("hide");
+    });
+  }
+
   return (
     <div>
       <Header />
@@ -94,9 +121,17 @@ const Home = ({
                 <p className="date">{format(new Date(blog.timestamp), "do LLLL u")}</p>
                 {isAdmin && <button type="button" className={blog.published ? "published" : "unpublished"} onClick={(e) => togglePublish(e, blog)}>{blog.published ? "Published" : "Unpublished"}</button>}
                 {isAdmin && <img src={Edit} alt="edit" className="edit-icon" onClick={() => navigate(`/${blog._id}/edit`)} />}
+                {isAdmin && <img src={Delete} alt="delete" className="delete-icon" onClick={() => confirmDelete(blog)} />}
               </div>
             );
           })}
+        </div>
+        <div className="confirm-delete hide">
+          <h3>Are you sure you want to delete this blog?</h3>
+          <div className="buttons">
+            <button type="button" className="confirm">Confirm</button>
+            <button type="button" className="cancel">Cancel</button>
+          </div>
         </div>
         {isAdmin && <button type="button" className="new-blog-btn" onClick={() => navigate("/create-blog")}>+ New Blog</button>}
         <Login setLoggedIn={setLoggedIn} />
