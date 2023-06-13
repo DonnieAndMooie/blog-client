@@ -17,7 +17,6 @@ export default function Login({ setLoggedIn, blogPage }) {
     const data = await response.json();
 
     if (data.token) {
-      console.log(data);
       localStorage.setItem("token", JSON.stringify({ token: data.token, timestamp: Date.now() }));
       localStorage.setItem("user", JSON.stringify({ username, id: data.userId }));
       setLoggedIn(true);

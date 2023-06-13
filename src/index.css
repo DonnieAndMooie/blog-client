@@ -219,3 +219,32 @@ form{
     font-weight: bold;
     margin-top: auto;
 }
+
+.create-blog h2{
+    font-size: 32px;
+}
+
+.create-blog form{
+    width: 100%;
+}
+
+.new-blog-title{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 100%;
+}
+
+.new-blog-title input{
+    height: 32px;
+    font-size: 22px;
+    width: 80%;
+}
+
+.upload-btn{
+    margin-top: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}

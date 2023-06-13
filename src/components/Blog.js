@@ -38,10 +38,12 @@ const Blog = ({ blog, setLoggedIn }) => {
     });
     document.querySelector("textarea").value = "";
     const data = await response.json();
-    const user = await fetch(`https://young-water-1545.fly.dev/users/${author}`);
-    const userData = await user.json();
-    data.author = userData;
-    setComments([data, ...comments]);
+    if (data.timestamp) {
+      const user = await fetch(`https://young-water-1545.fly.dev/users/${author}`);
+      const userData = await user.json();
+      data.author = userData;
+      setComments([data, ...comments]);
+    }
   }
 
   async function deleteComment(comment, index) {
