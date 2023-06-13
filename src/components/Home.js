@@ -6,7 +6,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
 
-const Home = ({ blogs, setLoggedIn, loggedIn }) => {
+const Home = ({
+  blogs, setLoggedIn, loggedIn,
+}) => {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
   // Check if token has expired
@@ -43,6 +45,35 @@ const Home = ({ blogs, setLoggedIn, loggedIn }) => {
     checkIfAdmin();
   }, [loggedIn]);
 
+  async function togglePublish(e, blog) {
+    let updatedValue;
+    if (e.target.className === "unpublished") {
+      updatedValue = true;
+    } else {
+      updatedValue = false;
+    }
+    const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token")).token}`,
+      },
+      body: JSON.stringify({
+        published: updatedValue,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    if (data.published) {
+      e.target.className = "published";
+      e.target.textContent = "Published";
+    } else {
+      e.target.className = "unpublished";
+      e.target.textContent = "Unpublished";
+    }
+  }
+
   return (
     <div>
       <Header />
@@ -54,15 +85,19 @@ const Home = ({ blogs, setLoggedIn, loggedIn }) => {
         </p>
         <div className="blogs">
           {blogs.map((blog, index) => {
+            if (!blog.published && !isAdmin) {
+              return;
+            }
             return (
               <div key={index} className="blog-item">
                 <h3><a href={blog._id}>{blog.title}</a></h3>
                 <p className="date">{format(new Date(blog.timestamp), "io LLLL u")}</p>
+                {isAdmin && <button type="button" className={blog.published ? "published" : "unpublished"} onClick={(e) => togglePublish(e, blog)}>{blog.published ? "Published" : "Unpublished"}</button>}
               </div>
             );
           })}
         </div>
-        <button type="button" className={isAdmin ? "new-blog-btn" : "hide"} onClick={() => navigate("/create-blog")}>+ New Blog</button>
+        {isAdmin && <button type="button" className="new-blog-btn" onClick={() => navigate("/create-blog")}>+ New Blog</button>}
         <Login setLoggedIn={setLoggedIn} />
       </div>
       <Footer />

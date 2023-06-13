@@ -21,7 +21,6 @@ const RouteSwitch = () => {
 
     fetchBlogs();
   }, []);
-
   return (
     <BrowserRouter>
       <Routes>

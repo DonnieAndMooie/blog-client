@@ -248,3 +248,14 @@ form{
     border-radius: 10px;
     font-weight: bold;
 }
+
+.unpublished{
+    background-color: red;
+    color: white;
+}
+
+.published,
+.unpublished{
+    font-size: 14px;
+    padding: 5px;
+}
