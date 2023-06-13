@@ -13,7 +13,7 @@ const RouteSwitch = () => {
     async function fetchBlogs() {
       try {
         const result = await (await fetch("https://young-water-1545.fly.dev/blogs")).json();
-        setBlogs(result);
+        setBlogs(result.reverse());
       } catch (err) {
         return err;
       }
@@ -28,6 +28,11 @@ const RouteSwitch = () => {
         {blogs.map((blog, index) => {
           return (
             <Route key={index} path={`/${blog._id}`} element={<Blog blog={blog} setLoggedIn={setLoggedIn} />} />
+          );
+        })}
+        {blogs.map((blog, index) => {
+          return (
+            <Route key={`edit-${index}`} path={`/${blog._id}/edit`} element={<CreateBlog blog={blog} />} />
           );
         })}
         <Route path="/sign-up" element={<SignUp />} />

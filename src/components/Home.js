@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
+import Edit from "../images/edit.png";
 
 const Home = ({
   blogs, setLoggedIn, loggedIn,
@@ -64,7 +65,6 @@ const Home = ({
     });
 
     const data = await response.json();
-    console.log(data);
     if (data.published) {
       e.target.className = "published";
       e.target.textContent = "Published";
@@ -91,8 +91,9 @@ const Home = ({
             return (
               <div key={index} className="blog-item">
                 <h3><a href={blog._id}>{blog.title}</a></h3>
-                <p className="date">{format(new Date(blog.timestamp), "io LLLL u")}</p>
+                <p className="date">{format(new Date(blog.timestamp), "do LLLL u")}</p>
                 {isAdmin && <button type="button" className={blog.published ? "published" : "unpublished"} onClick={(e) => togglePublish(e, blog)}>{blog.published ? "Published" : "Unpublished"}</button>}
+                {isAdmin && <img src={Edit} alt="edit" className="edit-icon" onClick={() => navigate(`/${blog._id}/edit`)} />}
               </div>
             );
           })}

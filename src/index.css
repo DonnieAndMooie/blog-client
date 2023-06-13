@@ -217,7 +217,8 @@ form{
 .new-blog-btn{
     border-radius: 18px;
     font-weight: bold;
-    margin-top: auto;
+    margin-top: 18px;
+    margin-bottom: 18px;
 }
 
 .create-blog h2{
@@ -258,4 +259,17 @@ form{
 .unpublished{
     font-size: 14px;
     padding: 5px;
+}
+
+.edit-icon{
+    height: 22px;
+    cursor: pointer;
+}
+
+.edit-icon:hover{
+    opacity: 0.6;
+}
+
+.unpublished:hover{
+    background-color: rgb(209, 0, 0);
 }
