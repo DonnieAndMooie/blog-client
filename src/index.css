@@ -291,3 +291,18 @@ form{
     justify-content: center;
 }
 
+@media (max-width: 500px) {
+    header h1{
+        font-size: 24px;
+    }
+    .content{
+        width: 95vw;
+        font-size: 18px;
+        padding: 5px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .intro{
+        font-size: 18px;
+    }
+}
