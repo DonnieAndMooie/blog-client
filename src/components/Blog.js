@@ -60,13 +60,19 @@ const Blog = ({ blog, setLoggedIn }) => {
     const data = await response.json();
   }
 
+  function htmlDecode(input) {
+    const e = document.createElement("div");
+    e.innerHTML = input;
+    return e.childNodes[0].nodeValue;
+  }
+
   return (
     <div>
       <Header />
       <div className="content">
         <h2>{blog.title}</h2>
         <p className="date">{format(new Date(blog.timestamp), "io LLLL u")}</p>
-        <p className="blog-content">{blog.content}</p>
+        <p className="blog-content" dangerouslySetInnerHTML={{ __html: htmlDecode(blog.content) }} />
         <h3>Comments</h3>
         <Login blogPage setLoggedIn={setLoggedIn} />
         <form className={localStorage.getItem("user") ? "" : "hide"} onSubmit={(e) => commentHandler(e)}>
