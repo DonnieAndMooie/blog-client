@@ -87,7 +87,7 @@ const Blog = ({ blog, setLoggedIn }) => {
                 <p><strong>{comment.author.username}</strong></p>
                 <div className="right-header">
                   <p className="date">{format(new Date(comment.timestamp), "h:mm a dd/MM/u")}</p>
-                  {comment.author._id === JSON.parse(localStorage.getItem("user")).id
+                  {JSON.parse(localStorage.getItem("user")) && comment.author._id === JSON.parse(localStorage.getItem("user")).id
                   && <button type="button" className="delete" onClick={() => deleteComment(comment, index)}>X</button>}
                 </div>
               </div>
