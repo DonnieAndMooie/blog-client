@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Blog from "./components/Blog";
 import SignUp from "./components/SignUp";
@@ -22,7 +22,7 @@ const RouteSwitch = () => {
     fetchBlogs();
   }, []);
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home blogs={blogs} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />} />
         {blogs.map((blog, index) => {
@@ -38,7 +38,7 @@ const RouteSwitch = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/create-blog" element={<CreateBlog />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
