@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Login({ setLoggedIn, blogPage }) {
   async function login(e) {
@@ -53,7 +54,7 @@ export default function Login({ setLoggedIn, blogPage }) {
       <p className={localStorage.getItem("token") ? "hide" : ""}>
         Don't have an account?
         {" "}
-        <a href="/sign-up">Sign Up</a>
+        <Link to="/sign-up">Sign Up</Link>
       </p>
       <p className={localStorage.getItem("user") && !blogPage ? "user" : "hide"}>
         You are currently logged in as

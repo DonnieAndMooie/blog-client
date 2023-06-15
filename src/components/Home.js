@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import moment, { duration } from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Login";
@@ -117,7 +117,7 @@ const Home = ({
             }
             return (
               <div key={index} className="blog-item">
-                <h3><a href={blog._id}>{blog.title}</a></h3>
+                <h3><Link to={blog._id}>{blog.title}</Link></h3>
                 <p className="date">{format(new Date(blog.timestamp), "do LLLL u")}</p>
                 {isAdmin && <button type="button" className={blog.published ? "published" : "unpublished"} onClick={(e) => togglePublish(e, blog)}>{blog.published ? "Published" : "Unpublished"}</button>}
                 {isAdmin && <img src={Edit} alt="edit" className="edit-icon" onClick={() => navigate(`/${blog._id}/edit`)} />}
