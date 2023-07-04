@@ -10,6 +10,7 @@ export default function CreateBlog({ blog }) {
   useEffect(() => {
     async function checkIfAdmin() {
       if (!localStorage.getItem("user")) {
+        // If no user logged in redirect to home
         navigate("/");
         return;
       }
@@ -17,12 +18,14 @@ export default function CreateBlog({ blog }) {
       const user = await fetch(`https://young-water-1545.fly.dev/users/${userId}`);
       const userData = await user.json();
       if (!userData.admin) {
+        // If user is not admin redirect to home
         navigate("/");
       }
     }
 
     checkIfAdmin();
     if (blog) {
+      // When blog is being editted set title to previous title
       setTitle(blog.title);
     }
   }, []);
@@ -30,6 +33,7 @@ export default function CreateBlog({ blog }) {
   async function formSubmitHandler(e) {
     e.preventDefault();
     const content = document.getElementById("blog-content").value;
+    // Save blog
     const response = await fetch("https://young-water-1545.fly.dev/blogs", {
       method: "POST",
       headers: {
@@ -47,6 +51,7 @@ export default function CreateBlog({ blog }) {
 
     const data = await response.json();
 
+    // Redirect to blog page
     navigate(`/${data._id}`);
     window.location.reload(false);
   }
@@ -58,6 +63,7 @@ export default function CreateBlog({ blog }) {
   async function updateBlog(e) {
     e.preventDefault();
     const content = document.getElementById("blog-content").value;
+    // Save updated blog
     const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}`, {
       method: "PUT",
       headers: {

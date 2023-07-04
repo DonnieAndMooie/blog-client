@@ -10,6 +10,7 @@ const RouteSwitch = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Fetch all blogs from database
     async function fetchBlogs() {
       try {
         const result = await (await fetch("https://young-water-1545.fly.dev/blogs")).json();

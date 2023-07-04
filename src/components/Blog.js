@@ -7,6 +7,7 @@ import Login from "./Login";
 const Blog = ({ blog, setLoggedIn }) => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
+    // Fetch all comments on post
     async function fetchComments() {
       try {
         const result = await (await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments`)).json();
@@ -23,6 +24,7 @@ const Blog = ({ blog, setLoggedIn }) => {
     e.preventDefault();
     const comment = document.querySelector("textarea").value;
     const author = JSON.parse(localStorage.getItem("user")).id;
+    // Save comment to DB
     const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments`, {
       method: "POST",
       headers: {
@@ -39,6 +41,7 @@ const Blog = ({ blog, setLoggedIn }) => {
     document.querySelector("textarea").value = "";
     const data = await response.json();
     if (data.timestamp) {
+      // Fetch author of comment and save comment in state
       const user = await fetch(`https://young-water-1545.fly.dev/users/${author}`);
       const userData = await user.json();
       data.author = userData;
@@ -47,9 +50,11 @@ const Blog = ({ blog, setLoggedIn }) => {
   }
 
   async function deleteComment(comment, index) {
+    // Remove comment from state
     setComments(comments.filter((item) => {
       return item._id !== comment._id;
     }));
+    // Remove comment from DB
     const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}/comments/${comment._id}`, {
       method: "DELETE",
       headers: {
@@ -61,6 +66,7 @@ const Blog = ({ blog, setLoggedIn }) => {
   }
 
   function htmlDecode(input) {
+    // Create div with html set to input
     const e = document.createElement("div");
     e.innerHTML = input;
     return e.childNodes[0].nodeValue;

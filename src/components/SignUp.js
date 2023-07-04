@@ -7,6 +7,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // If logged in redirect to homepage
     if (localStorage.getItem("user")) {
       return navigate("/");
     }
@@ -18,6 +19,7 @@ export default function SignUp() {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm-password").value;
 
+    // If passwords don't match show error
     if (password !== confirmPassword) {
       const error = document.querySelector(".error");
       error.classList.remove("hide");

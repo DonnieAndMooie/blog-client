@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Login({ setLoggedIn, blogPage }) {
   async function login(e) {
+    // Login with username and password
     e.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -17,6 +18,7 @@ export default function Login({ setLoggedIn, blogPage }) {
 
     const data = await response.json();
 
+    // Store token and user in localStorage
     if (data.token) {
       localStorage.setItem("token", JSON.stringify({ token: data.token, timestamp: Date.now() }));
       localStorage.setItem("user", JSON.stringify({ username, id: data.userId }));
@@ -28,6 +30,7 @@ export default function Login({ setLoggedIn, blogPage }) {
   }
 
   function logout() {
+    // Clear localstorage and logout
     const error = document.querySelector(".error");
     error.classList.add("hide");
     localStorage.removeItem("token");

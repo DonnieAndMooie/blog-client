@@ -31,6 +31,7 @@ const Home = ({
 
   useEffect(() => {
     async function checkIfAdmin() {
+      // Check if logged in user is an admin
       if (!localStorage.getItem("user")) {
         setIsAdmin(false);
         return;
@@ -48,6 +49,7 @@ const Home = ({
   }, [loggedIn]);
 
   async function togglePublish(e, blog) {
+    // Toggle whether the blog is published or not
     let updatedValue;
     if (e.target.className === "unpublished") {
       updatedValue = true;
@@ -66,6 +68,7 @@ const Home = ({
     });
 
     const data = await response.json();
+    // Change button to match updated state
     if (data.published) {
       e.target.className = "published";
       e.target.textContent = "Published";
@@ -76,6 +79,7 @@ const Home = ({
   }
 
   async function deleteBlog(blog) {
+    // Delete a specific blog
     const response = await fetch(`https://young-water-1545.fly.dev/blogs/${blog._id}`, {
       method: "DELETE",
       headers: {
@@ -87,6 +91,7 @@ const Home = ({
   }
 
   function confirmDelete(blog) {
+    // Display popup asking to confirm deletion
     const popup = document.querySelector(".confirm-delete");
     popup.classList.remove("hide");
 
